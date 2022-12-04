@@ -29,12 +29,11 @@ const userSchema = new mongoose.Schema({
         required: true,
      
         },
-    task: {
         taskCount: {type: Number,default:0},
         pending : {type: Number,default:0},
-        completed: {type: Number,default:0},
+     //   completed: {type: Number,default:0},
 
-    },
+  
     isDeleted:{type:Boolean,default:false}
 
 }, { timestamps: true })

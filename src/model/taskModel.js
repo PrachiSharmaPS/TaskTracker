@@ -12,11 +12,10 @@ const taskSchema= new mongoose.Schema({
             require:true
         },
    
-        taskData: {
              startDate : {type: Date,default:Date.now()},
             endDate: {type: Date,require:true},
     
-        },
+            deletedAt:{type:Date},
         isDeleted:{type:Boolean,default:false}
 
 },{timestamps:true})
