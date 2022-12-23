@@ -1,8 +1,9 @@
-const { isValidObjectId } = require("mongoose");
+
 const taskModel=require("../model/taskModel")
 const userModel=require("../model/userModel")
 
-const nameregex = RegExp("[a-zA-Z0-9\s]");
+
+//const nameregex = RegExp("[a-zA-Z0-9\s]");
 
 const createTask=async function(req,res){
 try{
@@ -74,7 +75,6 @@ const updateTask =async function (req,res){
        const taskId=req.params.taskId  
        const data=req.body
     
-       if(!isValidObjectId(taskId)){ return res.status(400).send({statsu:false,msg:"invalid taskId "})}
        if(Object.keys(data).length == 0) {return res.status(400).send({status:false, message:"Please provide some data"})}
    
       let task = await taskModel.findOneAndUpdate({ _id: taskId, isDeleted: false },{$set:data},{new:true})
@@ -89,10 +89,7 @@ const updateTask =async function (req,res){
 const deleteTask= async function(req,res){
     try {
         let taskId= req.params.taskId
-      
-        if(!isValidObjectId(taskId)){ 
-            return res.status(400).send({status : false, message : " it's not a valid task Id"})
-            }
+   
             let taskData= await taskModel.findById(taskId)
             if(!taskData){
                return res.status(404).send({status:false, message:"Task not found"})
