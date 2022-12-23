@@ -22,7 +22,7 @@ try {
     if (!regexValidation.test(name)) return res.status(400).send({ status: false, msg: "Please Enter Valid Name" })
     if (!regexValidNumber.test(phone)) return res.status(400).send({ status: false, msg: "Please Enter Valid Phone Number" })
     if (!emailValidator.validate(email)) return res.status(400).send({ status: false, msg: "Please Enter Valid email ID" })
-    if (!validPassword.test(password)){return res.status(400).send({ status: false, msg: " Incorrect Password, It should be of 6-15 digits with atlest one special character, alphabet and number" });}
+    if (!passwordFormat.test(password)){return res.status(400).send({ status: false, msg: " Incorrect Password, It should be of 6-15 digits with atlest one special character, alphabet and number" });}
 
     const check= await userModel.findOne({phone:phone},{email:email},{isDeleted: false })
     if (check)return res.status(400).send({ status: false, msg: "Phone/email already exists" });
@@ -48,7 +48,7 @@ const loginData = async function (req, res) {
         UserId: userInfo._id.toString(),
         iat: Date.now()
       },
-        'task-manager',{expiresIn:"18000s"}
+      process.env.Secret,{expiresIn:"18000s"}
       )
 
       return res.status(200).send({Status: true, Msg: " Your JWT Token is successful generated",  MyToken: userToken })
