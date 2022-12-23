@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
          required: true, 
          trim:true
         },
+        profile:{
+            type:String,
+            require:true
+        },
 
     phone: {
         type : String, 

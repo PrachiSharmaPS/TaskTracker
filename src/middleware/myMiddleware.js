@@ -1,4 +1,5 @@
 const jwt=require("jsonwebtoken")
+const taskModel=require("../model/taskModel")
 const { isValidObjectId } = require("mongoose")
 //----------------
 const authenticate = function (req, res, next) {
@@ -8,7 +9,7 @@ const authenticate = function (req, res, next) {
         if (!token) {
             return res.status(400).send({ status: false, message: "no token found" })
         }
-        jwt.verify(token, "task-managere", function (err, decodedToken) {
+        jwt.verify(token, "task-manager", function (err, decodedToken) {
             if (err) {
                 return res.status(401).send({ status: false, message: err.message })
             }
@@ -21,41 +22,35 @@ const authenticate = function (req, res, next) {
     }
 }
 //------------------validation---
-const objId=function(req,res){
+const isValidId=function(req,res,next){
     const taskId = req.params.taskId
     const userId = req.params.userId
-    if(!isValidObjectId(taskId)){ return res.status(400).send({status:false,msg:"invalid task id"})}
-    if(!isValidObjectId(userId)){ return res.status(400).send({status:false,msg:"invalid user id"})}
+   if(taskId) if(!isValidObjectId(taskId)){ return res.status(400).send({status:false,msg:"invalid task id"})}
+   if(userId)if(!isValidObjectId(userId)){ return res.status(400).send({status:false,msg:"invalid user id"})}
+   next()
 }
 
 //----------------------------
 const authorization = async function (req, res, next) {
     try {
-        let check = req.params.taskId
+        let taskId = req.params.taskId
+        
       
-        if (check) {
-            if(!check){
-                return res.status(400).send({status:false,message:"plese enter bookId"})
-             }
-             if(!isValidObjectId(check)){ 
-                 return res.status(400).send({status : false, message : " it's not a valid book Id"})
-            }
-            let checkUserId = await bookModel.findOne({ _id: check }).select({ userId: 1, _id: 0 })
+        if (taskId) {
+            
+            let checkUserId = await taskModel.findOne({ _id: taskId }).select({ userId: 1, _id: 0 })
             if(!checkUserId){
-                return res.status(400).send({status:false,message:"Book not Found"})
+                return res.status(400).send({status:false,message:"task not found"})
             }
             let userId = checkUserId.userId
             let id = req.decodedToken.userId
             if (id != userId) return res.status(403).send({ status: false, message: "You are not authorised to perform this task" })
         }
         else {
-            check = req.params.userId
-            if(!check){return res.status(400).send({ status : false, msg : "Please enter the user Id"})}
-            if(!isValidObjectId(check)){ return res.status(400).send({status : false, message : " it's not a valid user Id"})}
+            let userId = req.params.userId
+           
             let id = req.decodedToken.userId
-            console.log(check)
-
-            if (id != check) return res.status(403).send({ status: false, message: 'You are not authorised to perform this task 🤖' })
+            if (id != userId) return res.status(403).send({ status: false, message: 'You are not authorised to perform this task 🤖' })
         }
         next();
     }
@@ -64,4 +59,4 @@ const authorization = async function (req, res, next) {
         return res.status(500).send({ msg: error.message })
     }
 }
-module.exports={authenticate,authorization,objId}
+module.exports={authenticate,authorization,isValidId}
