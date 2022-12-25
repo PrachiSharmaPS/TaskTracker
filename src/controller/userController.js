@@ -3,6 +3,7 @@ const jwt=require("jsonwebtoken")
 const aws = require("../aws")
 const {valid,isValidPassword,isValidImage}=require("../middleware/validation")
 const emailValidator = require('email-validator')
+//srequire('dotenv').config();
 
 let regexValidation = new RegExp(/^[a-zA-Z]+([\s][a-zA-Z]+)*$/);
 let regexValidNumber = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/;
@@ -30,6 +31,7 @@ try {
     if (profileImage.length > 0) { var uploadedFileURL = await aws.uploadFile(profileImage[0]) }
     else { return res.status(400).send({ status: false, message: 'please provide profile image' }) }
 
+    data.profile=uploadedFileURL
     const check= await userModel.findOne({phone:phone},{email:email},{isDeleted: false })
     if (check)return res.status(400).send({ status: false, msg: "Phone/email already exists" });
 
