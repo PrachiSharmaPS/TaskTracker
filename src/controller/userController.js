@@ -3,7 +3,7 @@ const jwt=require("jsonwebtoken")
 const aws = require("../aws")
 const {valid,isValidPassword,isValidImage}=require("../middleware/validation")
 const emailValidator = require('email-validator')
-//srequire('dotenv').config();
+require('dotenv').config();
 
 let regexValidation = new RegExp(/^[a-zA-Z]+([\s][a-zA-Z]+)*$/);
 let regexValidNumber = /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/;
