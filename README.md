@@ -1,6 +1,11 @@
 # Task-Manager
 ## Project -Task-Manager
+This is a simple Task Manager project built using Node.js, Express.js, and MongoDB. It allows users to create, read, update, and delete tasks.
 
+## Requirements
+
+Node.js installed on your machine
+MongoDB installed and running
 
 ### Models
 - User Model
