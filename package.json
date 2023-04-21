@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PrachiSharmaPS/Task-Manager.git"
+    "url": "git+https://github.com/PrachiSharmaPS/To-Do-Application"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/PrachiSharmaPS/Task-Manager/issues"
+    "url": "https://github.com/PrachiSharmaPS/To-Do-Application/issues"
   },
-  "homepage": "https://github.com/PrachiSharmaPS/Task-Manager#readme",
+  "homepage": "https://github.com/PrachiSharmaPS/To-Do-Application#readme",
   "dependencies": {
     "aws-sdk": "^2.1349.0",
     "dotenv": "^16.0.3",
