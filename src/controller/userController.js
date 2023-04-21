@@ -14,6 +14,7 @@ const createUser = async function (req, res){
 try {
     let data = req.body
     const profileImage = req.files
+    
     if (Object.keys(data).length == 0) return res.status(400).send({ status: false, msg: "plzz give some data" })
 
     const { title, name, phone, email, password} = data
@@ -70,7 +71,7 @@ const deleteUser= async function(req,res){
   try{
     const userId=req.params.userId
 
-    const user=await userModel.findOneAndUpdate({ _id: userId, isDeleted: false },{$set:{isDeleted:true}},{new:true})
+    const user=await userModel.findOneAndUpdate({ _id: userId, isDeleted: false },{isDeleted:true},{new:true})
     if(!user){ return res.status(404).send({status:true, msg:"Not found /deleted"})}
 
     return res.status(200).send({Status: true,data:user})
